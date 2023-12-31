@@ -97,7 +97,7 @@ void file_urutan(int *array, int size){
         exit(1);
     } else {
         for(int i = 0; i < size; i++){
-            fprintf(data_urut, "%i\n", array[i]); //penginputan array ke dalam file "daftar kapal urut.txt"
+            fprintf(data_urut, "%i\n", array[i]); 
         }
     }
     fclose(data_urut);
@@ -105,47 +105,49 @@ void file_urutan(int *array, int size){
 //fungsi yang menginputkan data-data nomor kapal dari file "daftar kapal.txt" kedalam array "data_kapal"
 void daftar_nomor(int *data_kapal){
     FILE *nomor_kapal;
-    nomor_kapal = fopen("daftar kapal.txt", "r"); //membuka file
+    nomor_kapal = fopen("daftar kapal.txt", "r"); 
     int i = 0;
     if(nomor_kapal == NULL){
-        printf("EROR!"); //jika file tidak di temukan maka output "EROR", dan akan langsung keluar
+        printf("EROR!"); 
         exit(1);
     } else{
-        while(fscanf(nomor_kapal, "%i", &data_kapal[i]) == 1){ //perulangan yang menginputkan isi file ke dalam array "data_kapal"
+        while(fscanf(nomor_kapal, "%i", &data_kapal[i]) == 1){ 
             i++;
         }
     }
     fclose(nomor_kapal); //menutup file
 }
-// fungsi untuk mengubah, status = 1,menjadi, status = 0, jika yang di inputkan == "keluar"
+// fungsi untuk mengubah, status = 1,menjadi, 
+//status = 0, jika yang di inputkan == "keluar"
 void antrian_keluar(int *status){
-    printf("Kapal keluar: \n"); //menginfokan apakah ada kapal yang keluar dari dermaga atau tidak
+    printf("Kapal keluar: \n"); 
     for(int i = 0; i < 4; i++){
         char keluar[7];
         if(status[i] == 1){
             printf("dermaga %i: ", i +1);
-            scanf("%s", keluar); //input == "keluar", jika ingin mengubah status menjadi 0 / kosong
-            if(strcmp(keluar, "keluar") == 0){ //jika inputan == "keluar" -->
-                status[i] = 0; // maka status dermaga tersebut = 0;
+            scanf("%s", keluar); 
+            if(strcmp(keluar, "keluar") == 0){ 
+                status[i] = 0; 
             }
         }
     }
 }
-//fungsi untuk mengubah status dermaga menjadi = 1, dengan antrian yang sudah teratur
+//fungsi untuk mengubah status dermaga menjadi = 1, 
+//dengan antrian yang sudah teratur
 void antrian_masuk(int nomor, int *antrian, int *status){
     for(int i = 0; i < nomor; i++){
-        if(antrian[i] > 0){ //jika antrian(nomor kapal) > 0, maka masuk dalam percabangan, karena antrian == 0, adalah antrian yang sudah masuk
+        if(antrian[i] > 0){ 
             for(int j = 0; j < 4; j++){
-                int nmr = j; // untuk mengetahui nomer dermaga
+                int nmr = j; 
                 if(status[j] == 0){
-                    if(antrian[i] % 2 == 1 && j % 2 == 0 ){ // nomor kapal ganjil == dermaga nomor ganjil
+                    if(antrian[i] % 2 == 1 && j % 2 == 0 ){ 
                         status[j] = 1;
-                        antrian[i] = 0; //antrian tersebut menjadi 0, karena sudah masuk dermaga, dan agar tidak masuk lagi kedalam percabangan
+                        antrian[i] = 0; 
                         break; 
                         
-                    } else if(antrian[i] % 2 == 0 && j % 2 == 1 ){ // nomor kapal genap == dermaga nomor genap
+                    } else if(antrian[i] % 2 == 0 && j % 2 == 1 ){ 
                         status[j] = 1;
-                        antrian[i] = 0; //antrian tersebut menjadi 0, karena sudah masuk dermaga, dan agar tidak masuk lagi kedalam percabangan
+                        antrian[i] = 0; 
                         break; 
                     }
                     
@@ -158,12 +160,12 @@ void antrian_masuk(int nomor, int *antrian, int *status){
 void file_antrian(int *antrian, int size){
     FILE *data_antrian;
 
-    data_antrian = fopen("antrian kapal.txt", "w"); //menginputkan data nomer antrian dan nomor kapal kedalam file "antrian kapal.txt"
+    data_antrian = fopen("antrian kapal.txt", "w"); 
     if(data_antrian == NULL){
         printf("EROR!");
         exit(1);
     } else{
-        for(int i = 0; i < size; i++){ //perulangan untuk menginputkan antrian ke dalam file
+        for(int i = 0; i < size; i++){ 
             fprintf(data_antrian, "\t%i\n", antrian[i]);
         }
     }
@@ -172,8 +174,7 @@ void file_antrian(int *antrian, int size){
 
 // fungsi untuk print antrian kapal yang sedang berlangsung, dan juga menginput nya kedalam file
 void cek_antrian(int size, int *antrian){
-    FILE *data_antrian;
-    printf("No antri\tNo kapal\n"); //print nomor antrian disertai nomor kapal
+    printf("No antri\tNo kapal\n"); 
     for(int i = 0; i < size; i++){
         printf("%i\t\t%i\n", i+1, antrian[i]);
     }
@@ -249,7 +250,7 @@ int main(){
             case 2:
                 if(nomor == 0){
                     antrian_lanjut(antrian, &nomor);
-                }
+                } 
 
                 if(nomor == 0){
                     printf("Antrian masih kosong\n");
